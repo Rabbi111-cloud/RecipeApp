@@ -1,11 +1,13 @@
 'use client'
 
 import { useState } from 'react'
+import { useRouter } from 'next/navigation'
 
 export default function Home() {
   const [query, setQuery] = useState('')
   const [recipes, setRecipes] = useState([])
   const [loading, setLoading] = useState(false)
+  const router = useRouter()
 
   async function searchRecipes(e) {
     e.preventDefault()
@@ -42,11 +44,12 @@ export default function Home() {
         {recipes.map((recipe) => (
           <div
             key={recipe.id}
-            className="bg-white rounded-xl shadow"
+            className="bg-white rounded-xl shadow cursor-pointer hover:shadow-lg transition"
+            onClick={() => router.push(`/recipe/${recipe.id}`)}
           >
-            <img src={recipe.image} alt={recipe.title} />
+            <img src={recipe.image} alt={recipe.title} className="rounded-t-xl" />
             <div className="p-4">
-              <h2 className="font-semibold">{recipe.title}</h2>
+              <h2 className="font-semibold text-lg">{recipe.title}</h2>
             </div>
           </div>
         ))}
