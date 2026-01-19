@@ -1,45 +1,53 @@
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 
-export default function RecipePage({ params }) {
-  const { id } = params
-  const [recipe, setRecipe] = useState(null)
-  const [loading, setLoading] = useState(true)
+export default function Home() {
+  const [query, setQuery] = useState('')
+  const [recipes, setRecipes] = useState([])
+  const [loading, setLoading] = useState(false)
   const router = useRouter()
 
-  useEffect(() => {
-    async function fetchRecipe() {
-      const res = await fetch(
-        `https://api.spoonacular.com/recipes/${id}/information?apiKey=${process.env.NEXT_PUBLIC_RECIPE_API_KEY}`
-      )
-      const data = await res.json()
-      setRecipe(data)
-      setLoading(false)
-    }
-    fetchRecipe()
-  }, [id])
+  async function searchRecipes(e) {
+    e.preventDefault()
+    if (!query) return
 
-  if (loading) return <main style={{textAlign:'center', marginTop:'50px'}}>Loading recipe...</main>
+    setLoading(true)
+    const res = await fetch(
+      `https://api.spoonacular.com/recipes/complexSearch?query=${query}&number=12&apiKey=${process.env.NEXT_PUBLIC_RECIPE_API_KEY}`
+    )
+    const data = await res.json()
+    setRecipes(data.results || [])
+    setLoading(false)
+  }
 
   return (
     <main>
-      <button className="back-btn" onClick={() => router.back()}>← Back</button>
-      <h1>{recipe.title}</h1>
-      <img src={recipe.image} alt={recipe.title} style={{maxWidth:'100%', borderRadius:'10px'}} />
+      <form onSubmit={searchRecipes}>
+        <input
+          type="text"
+          placeholder="Search recipes..."
+          value={query}
+          onChange={(e) => setQuery(e.target.value)}
+        />
+        <button className="search-btn">Search</button>
+      </form>
 
-      <section style={{marginTop:'20px'}}>
-        <h2>Ingredients</h2>
-        <ul>
-          {recipe.extendedIngredients.map((ing) => (
-            <li key={ing.id}>{ing.original}</li>
-          ))}
-        </ul>
-      </section>
+      {loading && <p>Loading recipes...</p>}
 
-      <section style={{marginTop:'20px'}}>
-        <h2>Instructions</h2>
-        <div dangerouslySetInnerHTML={{ __html: recipe.instructions }} />
-      </section>
+      <div className="grid">
+        {recipes.map((recipe) => (
+          <div
+            key={recipe.id}
+            className="card"
+            onClick={() => router.push(`/recipe/${recipe.id}`)}
+          >
+            <img src={recipe.image} alt={recipe.title} />
+            <div className="card-content">
+              <h2>{recipe.title}</h2>
+            </div>
+          </div>
+        ))}
+      </div>
     </main>
   )
 }
