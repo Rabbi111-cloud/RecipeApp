@@ -37,7 +37,7 @@ export default function Home() {
     setLoading(true)
 
     const res = await fetch(
-      `https://api.spoonacular.com/recipes/complexSearch?query=${query}&number=12&apiKey=f0ce27ad278f467d9ede9c55df37e66c`
+      `https://api.spoonacular.com/recipes/complexSearch?query=${query}&number=12&apiKey=${process.env.NEXT_PUBLIC_RECIPE_API_KEY}`
     )
     const data = await res.json()
     setRecipes(data.results || [])
