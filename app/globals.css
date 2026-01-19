@@ -2,6 +2,9 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Custom global styles */
+html,
 body {
-  font-family: system-ui, sans-serif;
+  padding: 0;
+  margin: 0;
 }
