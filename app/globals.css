@@ -1,3 +1,4 @@
+/* Global styles */
 html,
 body {
   margin: 0;
@@ -7,11 +8,97 @@ body {
   color: #111;
 }
 
-header {
-  border-bottom: 1px solid #ddd;
-  background: #fff;
+a {
+  text-decoration: none;
+  color: inherit;
 }
 
-button {
+header {
+  border-bottom: 1px solid #ddd;
+  background-color: #fff;
+}
+
+header h1 {
+  margin: 0;
+  font-size: 24px;
+}
+
+header button {
+  padding: 6px 12px;
+  background: #eee;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+main {
+  max-width: 960px;
+  margin: 20px auto;
+  padding: 0 15px;
+}
+
+form {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+input[type="text"] {
+  flex: 1;
+  padding: 10px;
+  font-size: 16px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+
+button.search-btn {
+  padding: 10px 20px;
+  font-size: 16px;
+  background-color: #111;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 20px;
+}
+
+.card {
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  overflow: hidden;
+  transition: transform 0.2s;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+}
+
+.card img {
+  width: 100%;
+  display: block;
+}
+
+.card-content {
+  padding: 15px;
+}
+
+.card-content h2 {
+  font-size: 18px;
+  margin: 0;
+}
+
+.back-btn {
+  display: inline-block;
+  margin-bottom: 20px;
+  padding: 6px 12px;
+  background: #eee;
+  border-radius: 5px;
   cursor: pointer;
 }
